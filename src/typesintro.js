@@ -23,3 +23,9 @@ var Action;
 })(Action || (Action = {}));
 var action = Action.GET_USERS;
 console.log(action);
+var tuple = ['Some string', 5];
+var firstItem = tuple[0];
+var secondItem = tuple[1];
+var getNameAndAge = function () {
+    return ["Stannis", 55];
+};
