@@ -10,6 +10,9 @@ var Car = /** @class */ (function () {
         Car.SERIES_NUMBER++;
         this._seriesNumber = Car.SERIES_NUMBER;
     }
+    Car.BuildCar = function (brandName) {
+        return new Car(brandName);
+    };
     Car.BuyCar = function (brandName, ownerName) {
         var car = new Car(brandName);
         car.ownerName = ownerName;
