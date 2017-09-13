@@ -1,9 +1,15 @@
-export const getAllBooks = () => {
+import { Category } from './enums';
+import { Book, DamageLogger, Author, Librarian } from './interfaces';
+import { UniversityLibrarian, ReferenceItem } from './classes';
+export const getAllBooks = (): Book[] => {
     let books = [
-        {id: 1, title: "U", author: "JJ", available: true, category: Category.Fiction },
-        {id: 2, title: "GoT", author: "GRRM", available: false, category: Category.Fiction },
-        {id: 3, title: "AFtA", author: "EH", available: true, category: Category.History },
-        {id: 4, title: "GGS", author: "JD", available: true, category: Category.History }
+        {id: 1, title: "Odyssey", author: "Homer", available: true, category: Category.History },
+        {id: 2, title: "Game of Thrones", author: "George R. R. Martin", available: false, category: Category.Fiction },
+        {id: 3, title: "A Farewell to Arms", author: "Ernest Hemingway", available: true, category: Category.Fiction },
+        {id: 4, title: "Guns, Germs, and Steel", author: "Jared Diamond", available: true, category: Category.History },
+        {id: 5, title: "Fire and Ice", author: "Robert Frost", available: true, category: Category.Poetry },
+        {id: 6, title: "Leaves of Grass", author: "Walt Whitman", available: true, category: Category.Poetry },
+        {id: 7, title: "The Diary of a Young Girl", author: "Anne Frank", available: true, category: Category.Biography }
     ]
     return books;
 }
@@ -23,7 +29,6 @@ const logFirstAvailable = (books = getAllBooks()): void => {
     console.log(`first: ${firstAvailable}`);
 }
 
-enum Category { Biography, Poetry, Fiction, History, Children };
 
 const getBookTitlesByCategory = (categoryFilter: Category = Category.History): Array<string> => {
     console.log(`Getting ${Category[categoryFilter]} books`);
@@ -39,7 +44,7 @@ const getBookTitlesByCategory = (categoryFilter: Category = Category.History): A
     return filteredTitles;
 };
 
-const getBooksById = (id: number) => {
+const getBooksById = (id: number): Book => {
     const allBooks = getAllBooks();
     return allBooks.filter((val,idx, arr) => val.id === id)[0];
 }
@@ -86,6 +91,10 @@ function getTitles(bookProp: any): string[] {
     return foundTitles;
 }
 
+function printBook(book: Book): void {
+    console.log(`${book.title} by ${book.author}`);
+}
+
 //****************
 //const fictionBooks = getBookTitlesByCategory(Category.Fiction);
 //fictionBooks.forEach((val, idx, arr) => console.log(val));
@@ -97,5 +106,32 @@ function getTitles(bookProp: any): string[] {
 //let johnsBooks: string[] = checkoutBooks('john', 1, 2, 3);
 //johnsBooks.forEach(title => console.log(title));
 
-let availableBooks = getTitles(false);
-availableBooks.forEach(title => console.log(title));
+//let availableBooks = getTitles(false);
+//availableBooks.forEach(title => console.log(title));
+
+let myBook = {
+    id: 444,
+    title: 'The Nose',
+    author: 'Nikolai Gogol',
+    available: false,
+    category: Category.Fiction,
+    year: 1836,
+    copies: 2,
+    markDamaged: (reason: string) => console.log(`Damaged: ${reason}`)
+}
+
+//printBook(myBook);
+//myBook.markDamaged('missing back cover');
+
+// let logDamage: DamageLogger;
+// logDamage = (damage: string) => console.log(`Damage reported: ${damage}`);
+// logDamage("tea stains");
+
+//let favoriteLibrarian: Librarian = new UniversityLibrarian();
+//favoriteLibrarian.name = "Sharon";
+//favoriteLibrarian.assistCustomer('Carol');
+
+var ref = new ReferenceItem('Facts and Figures', 2017);
+ref.printItem();
+ref.publisher = 'Random Publishing House';
+console.log(ref.publisher);

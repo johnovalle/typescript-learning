@@ -9,6 +9,7 @@
             "command": "tsc",
             "args": ["--target", "ES5",
                 "--outDir", "libraryManager/js",
+                "--module", "commonjs",
                 "--sourceMap",
                 "--watch",
                 "libraryManager/app.ts"
