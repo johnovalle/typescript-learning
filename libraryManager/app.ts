@@ -1,6 +1,6 @@
 import { Category } from './enums';
 import { Book, DamageLogger, Author, Librarian } from './interfaces';
-import { UniversityLibrarian, ReferenceItem } from './classes';
+import { UniversityLibrarian, ReferenceItem, Encyclopedia } from './classes';
 export const getAllBooks = (): Book[] => {
     let books = [
         {id: 1, title: "Odyssey", author: "Homer", available: true, category: Category.History },
@@ -131,7 +131,19 @@ let myBook = {
 //favoriteLibrarian.name = "Sharon";
 //favoriteLibrarian.assistCustomer('Carol');
 
-var ref = new ReferenceItem('Facts and Figures', 2017);
-ref.printItem();
-ref.publisher = 'Random Publishing House';
-console.log(ref.publisher);
+//var ref = new ReferenceItem('Facts and Figures', 2017);
+//ref.printItem();
+//ref.publisher = 'Random Publishing House';
+//console.log(ref.publisher);
+
+//let refBook: ReferenceItem = new Encyclopedia('Worldpedia', 2017, 10);
+//refBook.printCitation();
+
+let Newspaper = class extends ReferenceItem {
+    printCitation(): void {
+        console.log(`Newspaper: ${this.title}`);
+    }
+}
+
+let myPaper = new Newspaper("Times", 2017);
+myPaper.printCitation();
