@@ -1,17 +1,7 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var enums_1 = require("./enums");
-var classes_1 = require("./classes");
+var shelf_1 = require("./shelf");
 exports.getAllBooks = function () {
     var books = [
         { id: 1, title: "Odyssey", author: "Homer", available: true, category: enums_1.Category.History },
@@ -130,16 +120,33 @@ var myBook = {
 //console.log(ref.publisher);
 //let refBook: ReferenceItem = new Encyclopedia('Worldpedia', 2017, 10);
 //refBook.printCitation();
-var Newspaper = /** @class */ (function (_super) {
-    __extends(class_1, _super);
-    function class_1() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    class_1.prototype.printCitation = function () {
-        console.log("Newspaper: " + this.title);
-    };
-    return class_1;
-}(classes_1.ReferenceItem));
-var myPaper = new Newspaper("Times", 2017);
-myPaper.printCitation();
+// let Newspaper = class extends ReferenceItem {
+//     printCitation(): void {
+//         console.log(`Newspaper: ${this.title}`);
+//     }
+// }
+// let myPaper = new Newspaper("Times", 2017);
+// myPaper.printCitation();
+var inventory = [
+    { id: 10, title: "The C Programmming Language", author: "Homer", available: true, category: enums_1.Category.Software },
+    { id: 11, title: "Code Complete", author: "George R. R. Martin", available: false, category: enums_1.Category.Software },
+    { id: 12, title: "Clean Code", author: "Ernest Hemingway", available: true, category: enums_1.Category.Software },
+    { id: 13, title: "Design Patterns", author: "Jared Diamond", available: true, category: enums_1.Category.Software },
+];
+// let purgedBooks: Array<Book> = Purge<Book>(inventory);
+// console.log(purgedBooks);
+// let purgedNumbers: Array<number> = Purge<number>([1,2,3,4,5,6]);
+// console.log(purgedNumbers);
+var bookShelf = new shelf_1.default();
+inventory.forEach(function (book) { return bookShelf.add(book); });
+var firstBook = bookShelf.getFirst();
+var magazines = [
+    { title: "Game programming", publisher: "Coding Books" },
+    { title: "Game Design Patterns", publisher: "O'Reilly" },
+    { title: "Foundation Game Design", publisher: "FoE" }
+];
+var magShelf = new shelf_1.default();
+magazines.forEach(function (mag) { return magShelf.add(mag); });
+var firstMag = magShelf.getFirst();
+magShelf.printTitles();
 //# sourceMappingURL=app.js.map

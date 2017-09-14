@@ -1,6 +1,9 @@
 import { Category } from './enums';
-import { Book, DamageLogger, Author, Librarian } from './interfaces';
+import { Book, DamageLogger, Author, Librarian, Mag } from './interfaces';
 import { UniversityLibrarian, ReferenceItem, Encyclopedia } from './classes';
+import { Purge } from './utilityFunctions';
+import Shelf from './shelf';
+
 export const getAllBooks = (): Book[] => {
     let books = [
         {id: 1, title: "Odyssey", author: "Homer", available: true, category: Category.History },
@@ -139,11 +142,41 @@ let myBook = {
 //let refBook: ReferenceItem = new Encyclopedia('Worldpedia', 2017, 10);
 //refBook.printCitation();
 
-let Newspaper = class extends ReferenceItem {
-    printCitation(): void {
-        console.log(`Newspaper: ${this.title}`);
-    }
-}
+// let Newspaper = class extends ReferenceItem {
+//     printCitation(): void {
+//         console.log(`Newspaper: ${this.title}`);
+//     }
+// }
 
-let myPaper = new Newspaper("Times", 2017);
-myPaper.printCitation();
+// let myPaper = new Newspaper("Times", 2017);
+// myPaper.printCitation();
+
+let inventory: Array<Book> = [
+    {id: 10, title: "The C Programmming Language", author: "Homer", available: true, category: Category.Software },
+    {id: 11, title: "Code Complete", author: "George R. R. Martin", available: false, category: Category.Software },
+    {id: 12, title: "Clean Code", author: "Ernest Hemingway", available: true, category: Category.Software },
+    {id: 13, title: "Design Patterns", author: "Jared Diamond", available: true, category: Category.Software },
+];
+
+// let purgedBooks: Array<Book> = Purge<Book>(inventory);
+// console.log(purgedBooks);
+// let purgedNumbers: Array<number> = Purge<number>([1,2,3,4,5,6]);
+// console.log(purgedNumbers);
+
+let bookShelf: Shelf<Book> = new Shelf<Book>();
+
+inventory.forEach(book => bookShelf.add(book));
+
+let firstBook: Book = bookShelf.getFirst();
+
+let magazines: Array<Mag> = [
+    { title: "Game programming", publisher: "Coding Books" },
+    { title: "Game Design Patterns", publisher: "O'Reilly" },
+    { title: "Foundation Game Design", publisher: "FoE" } 
+];
+
+let magShelf: Shelf<Mag> = new Shelf<Mag>();
+magazines.forEach(mag => magShelf.add(mag));
+let firstMag: Mag = magShelf.getFirst();
+
+magShelf.printTitles();
