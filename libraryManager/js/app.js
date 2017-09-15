@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var enums_1 = require("./enums");
-var shelf_1 = require("./shelf");
-exports.getAllBooks = function () {
+// var test = _.snakeCase("type definition testing");
+// console.log(test);
+var getAllBooks = function () {
     var books = [
         { id: 1, title: "Odyssey", author: "Homer", available: true, category: enums_1.Category.History },
         { id: 2, title: "Game of Thrones", author: "George R. R. Martin", available: false, category: enums_1.Category.Fiction },
@@ -15,7 +16,7 @@ exports.getAllBooks = function () {
     return books;
 };
 var logFirstAvailable = function (books) {
-    if (books === void 0) { books = exports.getAllBooks(); }
+    if (books === void 0) { books = getAllBooks(); }
     var numberOfBooks = books.length;
     var firstAvailable = '';
     for (var _i = 0, books_1 = books; _i < books_1.length; _i++) {
@@ -31,7 +32,7 @@ var logFirstAvailable = function (books) {
 var getBookTitlesByCategory = function (categoryFilter) {
     if (categoryFilter === void 0) { categoryFilter = enums_1.Category.History; }
     console.log("Getting " + enums_1.Category[categoryFilter] + " books");
-    var allBooks = exports.getAllBooks();
+    var allBooks = getAllBooks();
     var filteredTitles = [];
     for (var _i = 0, allBooks_1 = allBooks; _i < allBooks_1.length; _i++) {
         var currentBook = allBooks_1[_i];
@@ -42,7 +43,7 @@ var getBookTitlesByCategory = function (categoryFilter) {
     return filteredTitles;
 };
 var getBooksById = function (id) {
-    var allBooks = exports.getAllBooks();
+    var allBooks = getAllBooks();
     return allBooks.filter(function (val, idx, arr) { return val.id === id; })[0];
 };
 function createCustomerId(name, id) {
@@ -74,17 +75,26 @@ function checkoutBooks(customer) {
 function getTitles(bookProp) {
     var foundTitles = [];
     if (typeof bookProp === 'string') {
-        foundTitles = exports.getAllBooks().filter(function (val) { return val.author === bookProp; })
+        foundTitles = getAllBooks().filter(function (val) { return val.author === bookProp; })
             .map(function (val) { return val.title; });
     }
     else if (typeof bookProp === 'boolean') {
-        foundTitles = exports.getAllBooks().filter(function (val) { return val.available === bookProp; })
+        foundTitles = getAllBooks().filter(function (val) { return val.available === bookProp; })
             .map(function (val) { return val.title; });
     }
     return foundTitles;
 }
-function printBook(book) {
-    console.log(book.title + " by " + book.author);
+function printBook(_a) {
+    var title = _a.title, bookauthor = _a.author;
+    console.log(title + " by " + bookauthor);
+}
+function logFavoriteBooks(_a) {
+    var book1 = _a[0], book2 = _a[1], others = _a.slice(2);
+    printBook(book1);
+    printBook(book2);
+    var booktitle = book1.title, bookauthor = book1.author;
+    console.log(booktitle, bookauthor);
+    console.log(others);
 }
 //****************
 //const fictionBooks = getBookTitlesByCategory(Category.Fiction);
@@ -96,16 +106,16 @@ function printBook(book) {
 //johnsBooks.forEach(title => console.log(title));
 //let availableBooks = getTitles(false);
 //availableBooks.forEach(title => console.log(title));
-var myBook = {
-    id: 444,
-    title: 'The Nose',
-    author: 'Nikolai Gogol',
-    available: false,
-    category: enums_1.Category.Fiction,
-    year: 1836,
-    copies: 2,
-    markDamaged: function (reason) { return console.log("Damaged: " + reason); }
-};
+// let myBook = {
+//     id: 444,
+//     title: 'The Nose',
+//     author: 'Nikolai Gogol',
+//     available: false,
+//     category: Category.Fiction,
+//     year: 1836,
+//     copies: 2,
+//     markDamaged: (reason: string) => console.log(`Damaged: ${reason}`)
+// }
 //printBook(myBook);
 //myBook.markDamaged('missing back cover');
 // let logDamage: DamageLogger;
@@ -127,26 +137,37 @@ var myBook = {
 // }
 // let myPaper = new Newspaper("Times", 2017);
 // myPaper.printCitation();
-var inventory = [
-    { id: 10, title: "The C Programmming Language", author: "Homer", available: true, category: enums_1.Category.Software },
-    { id: 11, title: "Code Complete", author: "George R. R. Martin", available: false, category: enums_1.Category.Software },
-    { id: 12, title: "Clean Code", author: "Ernest Hemingway", available: true, category: enums_1.Category.Software },
-    { id: 13, title: "Design Patterns", author: "Jared Diamond", available: true, category: enums_1.Category.Software },
-];
-// let purgedBooks: Array<Book> = Purge<Book>(inventory);
-// console.log(purgedBooks);
-// let purgedNumbers: Array<number> = Purge<number>([1,2,3,4,5,6]);
-// console.log(purgedNumbers);
-var bookShelf = new shelf_1.default();
-inventory.forEach(function (book) { return bookShelf.add(book); });
-var firstBook = bookShelf.getFirst();
-var magazines = [
-    { title: "Game programming", publisher: "Coding Books" },
-    { title: "Game Design Patterns", publisher: "O'Reilly" },
-    { title: "Foundation Game Design", publisher: "FoE" }
-];
-var magShelf = new shelf_1.default();
-magazines.forEach(function (mag) { return magShelf.add(mag); });
-var firstMag = magShelf.getFirst();
-magShelf.printTitles();
+// let inventory: Array<Book> = [
+//     {id: 10, title: "The C Programmming Language", author: "Homer", available: true, category: Category.Software },
+//     {id: 11, title: "Code Complete", author: "George R. R. Martin", available: false, category: Category.Software },
+//     {id: 12, title: "Clean Code", author: "Ernest Hemingway", available: true, category: Category.Software },
+//     {id: 13, title: "Design Patterns", author: "Jared Diamond", available: true, category: Category.Software },
+// ];
+// // let purgedBooks: Array<Book> = Purge<Book>(inventory);
+// // console.log(purgedBooks);
+// // let purgedNumbers: Array<number> = Purge<number>([1,2,3,4,5,6]);
+// // console.log(purgedNumbers);
+// let bookShelf: Shelf<Book> = new Shelf<Book>();
+// inventory.forEach(book => bookShelf.add(book));
+// let firstBook: Book = bookShelf.getFirst();
+// let magazines: Array<Mag> = [
+//     { title: "Game programming", publisher: "Coding Books" },
+//     { title: "Game Design Patterns", publisher: "O'Reilly" },
+//     { title: "Foundation Game Design", publisher: "FoE" } 
+// ];
+// let magShelf: Shelf<Mag> = new Shelf<Mag>();
+// magazines.forEach(mag => magShelf.add(mag));
+// let firstMag: Mag = magShelf.getFirst();
+// magShelf.printTitles();
+//let [book1, book2] = getAllBooks();
+//let books: Book[] = [];
+//books.push(...getAllBooks());
+function applyMixins(derivedCtor, baseCtors) {
+    baseCtors.forEach(function (baseCtors) {
+        Object.getOwnPropertyNames(baseCtors.prototype).forEach(function (name) {
+            derivedCtor.prototype[name] = baseCtors.prototype[name];
+        });
+    });
+}
+var employee = 'Manager';
 //# sourceMappingURL=app.js.map

@@ -3,8 +3,12 @@ import { Book, DamageLogger, Author, Librarian, Mag } from './interfaces';
 import { UniversityLibrarian, ReferenceItem, Encyclopedia } from './classes';
 import { Purge } from './utilityFunctions';
 import Shelf from './shelf';
+import * as _ from 'lodash';
 
-export const getAllBooks = (): Book[] => {
+// var test = _.snakeCase("type definition testing");
+// console.log(test);
+
+const getAllBooks = (): Book[] => {
     let books = [
         {id: 1, title: "Odyssey", author: "Homer", available: true, category: Category.History },
         {id: 2, title: "Game of Thrones", author: "George R. R. Martin", available: false, category: Category.Fiction },
@@ -94,8 +98,16 @@ function getTitles(bookProp: any): string[] {
     return foundTitles;
 }
 
-function printBook(book: Book): void {
-    console.log(`${book.title} by ${book.author}`);
+function printBook({title, author: bookauthor}: Book): void {
+    console.log(`${title} by ${bookauthor}`);
+}
+
+function logFavoriteBooks([book1, book2, ...others]: Book[]){
+    printBook(book1);
+    printBook(book2);
+    let {title: booktitle, author: bookauthor } = book1;
+    console.log(booktitle, bookauthor);
+    console.log(others);
 }
 
 //****************
@@ -112,16 +124,16 @@ function printBook(book: Book): void {
 //let availableBooks = getTitles(false);
 //availableBooks.forEach(title => console.log(title));
 
-let myBook = {
-    id: 444,
-    title: 'The Nose',
-    author: 'Nikolai Gogol',
-    available: false,
-    category: Category.Fiction,
-    year: 1836,
-    copies: 2,
-    markDamaged: (reason: string) => console.log(`Damaged: ${reason}`)
-}
+// let myBook = {
+//     id: 444,
+//     title: 'The Nose',
+//     author: 'Nikolai Gogol',
+//     available: false,
+//     category: Category.Fiction,
+//     year: 1836,
+//     copies: 2,
+//     markDamaged: (reason: string) => console.log(`Damaged: ${reason}`)
+// }
 
 //printBook(myBook);
 //myBook.markDamaged('missing back cover');
@@ -151,32 +163,47 @@ let myBook = {
 // let myPaper = new Newspaper("Times", 2017);
 // myPaper.printCitation();
 
-let inventory: Array<Book> = [
-    {id: 10, title: "The C Programmming Language", author: "Homer", available: true, category: Category.Software },
-    {id: 11, title: "Code Complete", author: "George R. R. Martin", available: false, category: Category.Software },
-    {id: 12, title: "Clean Code", author: "Ernest Hemingway", available: true, category: Category.Software },
-    {id: 13, title: "Design Patterns", author: "Jared Diamond", available: true, category: Category.Software },
-];
+// let inventory: Array<Book> = [
+//     {id: 10, title: "The C Programmming Language", author: "Homer", available: true, category: Category.Software },
+//     {id: 11, title: "Code Complete", author: "George R. R. Martin", available: false, category: Category.Software },
+//     {id: 12, title: "Clean Code", author: "Ernest Hemingway", available: true, category: Category.Software },
+//     {id: 13, title: "Design Patterns", author: "Jared Diamond", available: true, category: Category.Software },
+// ];
 
-// let purgedBooks: Array<Book> = Purge<Book>(inventory);
-// console.log(purgedBooks);
-// let purgedNumbers: Array<number> = Purge<number>([1,2,3,4,5,6]);
-// console.log(purgedNumbers);
+// // let purgedBooks: Array<Book> = Purge<Book>(inventory);
+// // console.log(purgedBooks);
+// // let purgedNumbers: Array<number> = Purge<number>([1,2,3,4,5,6]);
+// // console.log(purgedNumbers);
 
-let bookShelf: Shelf<Book> = new Shelf<Book>();
+// let bookShelf: Shelf<Book> = new Shelf<Book>();
 
-inventory.forEach(book => bookShelf.add(book));
+// inventory.forEach(book => bookShelf.add(book));
 
-let firstBook: Book = bookShelf.getFirst();
+// let firstBook: Book = bookShelf.getFirst();
 
-let magazines: Array<Mag> = [
-    { title: "Game programming", publisher: "Coding Books" },
-    { title: "Game Design Patterns", publisher: "O'Reilly" },
-    { title: "Foundation Game Design", publisher: "FoE" } 
-];
+// let magazines: Array<Mag> = [
+//     { title: "Game programming", publisher: "Coding Books" },
+//     { title: "Game Design Patterns", publisher: "O'Reilly" },
+//     { title: "Foundation Game Design", publisher: "FoE" } 
+// ];
 
-let magShelf: Shelf<Mag> = new Shelf<Mag>();
-magazines.forEach(mag => magShelf.add(mag));
-let firstMag: Mag = magShelf.getFirst();
+// let magShelf: Shelf<Mag> = new Shelf<Mag>();
+// magazines.forEach(mag => magShelf.add(mag));
+// let firstMag: Mag = magShelf.getFirst();
 
-magShelf.printTitles();
+// magShelf.printTitles();
+
+//let [book1, book2] = getAllBooks();
+//let books: Book[] = [];
+//books.push(...getAllBooks());
+
+function applyMixins(derivedCtor: any, baseCtors: any[]) {
+    baseCtors.forEach(baseCtors => {
+        Object.getOwnPropertyNames(baseCtors.prototype).forEach(name => {
+            derivedCtor.prototype[name] = baseCtors.prototype[name];
+        });
+    });
+}
+
+type EmployeeCategory = 'Manager' | 'Non-Manager';
+let employee: EmployeeCategory = 'Manager';

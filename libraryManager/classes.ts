@@ -1,5 +1,22 @@
 import { Book, Author, Librarian } from './interfaces';
 
+class Employee {
+    title: string;
+
+    addToSchedule(): void {
+        console.log("Employee added to schedule");
+    }
+    logTitle(): void {
+        console.log(`Employee has the time ${this.title}.`);
+    }
+}
+
+class Researcher {
+    doResearch(topic: string): void {
+        console.log(`Doing research on ${topic}.`);
+    }
+}
+
 class UniversityLibrarian implements Librarian {
     name: string;
     email: string;
@@ -47,4 +64,4 @@ class Encyclopedia extends ReferenceItem {
     }
 }
 
-export { UniversityLibrarian, ReferenceItem, Encyclopedia };
+export { UniversityLibrarian, ReferenceItem, Encyclopedia, Employee, Researcher };
